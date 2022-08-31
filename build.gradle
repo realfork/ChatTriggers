@@ -78,7 +78,7 @@ minecraft {
 mixin {
     disableRefMapWarning = true
     defaultObfuscationEnv searge
-    add sourceSets.main, 'mixins.forkprivate.refmap.json'
+    add sourceSets.main, 'mixins.chattriggers.refmap.json'
 }
 
 afterEvaluate {
