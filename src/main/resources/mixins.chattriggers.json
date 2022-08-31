@@ -1,0 +1,16 @@
+{
+  "minVersion": "0.6",
+  "compatibilityLevel": "JAVA_8",
+  "package": "com.chattriggers.ctjs.mixins",
+  "refmap": "mixins.chattriggers.refmap.json",
+  "client": [
+    "MixinCrashReport",
+    "MixinEffectRenderer",
+    "MixinGuiContainer",
+    "MixinGuiScreen",
+    "MixinMainMenu",
+    "MixinMinecraft",
+    "MixinScoreboard",
+    "MixinTitle"
+  ]
+}
