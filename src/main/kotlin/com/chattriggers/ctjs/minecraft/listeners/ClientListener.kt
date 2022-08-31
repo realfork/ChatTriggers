@@ -180,11 +180,6 @@ object ClientListener {
     }
 
     @SubscribeEvent
-    fun onGuiOpened(event: GuiOpenEvent) {
-        if (event.gui != null) TriggerType.GuiOpened.triggerAll(event)
-    }
-
-    @SubscribeEvent
     fun onBlockHighlight(event: DrawBlockHighlightEvent) {
         if (event.target == null || event.target.blockPos == null) return
 

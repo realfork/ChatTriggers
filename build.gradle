@@ -23,6 +23,8 @@ buildscript {
                 ? "com.github.ReplayMod.ForgeGradle:541e1485-all"
                 : "com.github.Debuggingss:ForgeGradle:1d22621a6b"
         )
+        // might need different versions
+        classpath "com.github.xcfrg:MixinGradle:0.6-SNAPSHOT"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:$dokka_version"
         classpath ':proguard:'
@@ -30,6 +32,7 @@ buildscript {
 }
 
 apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: "org.spongepowered.mixin"
 apply plugin: 'kotlin'
 apply plugin: 'org.jetbrains.dokka'
 
@@ -68,6 +71,14 @@ minecraft {
     runDir = "run"
 
     makeObfSourceJar = true
+
+    clientRunArgs += "--mixin mixins.chattriggers.json"
+}
+
+mixin {
+    disableRefMapWarning = true
+    defaultObfuscationEnv searge
+    add sourceSets.main, 'mixins.forkprivate.refmap.json'
 }
 
 afterEvaluate {
@@ -89,6 +100,11 @@ dependencies {
     provided("dev.falsehonesty.asmhelper:AsmHelper:1.5.3-$mcVersion") {
         exclude group: "org.jetbrains.kotlin"
     }
+    annotationProcessor "org.spongepowered:mixin:0.7.11-SNAPSHOT"
+    implementation("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
+        transitive = false
+    }
+
     provided 'com.fasterxml.jackson.core:jackson-core:2.13.0'
     provided 'com.chattriggers:rhino:1.8.6'
     provided 'com.fifesoft:rsyntaxtextarea:3.1.3'
@@ -111,6 +127,7 @@ jar {
         "FMLCorePlugin": "dev.falsehonesty.asmhelper.core.AsmHelperLoadingPlugin",
         "FMLCorePluginContainsFMLMod": "true",
         "TweakClass": "gg.essential.loader.stage0.EssentialSetupTweaker",
+        "MixinConfigs": "mixins.chattriggers.json",
         "FMLAT": "ctjs_at.cfg"
     )
 }
