@@ -1,12 +1,15 @@
 package com.chattriggers.ctjs.minecraft.wrappers.entity
 
 import com.chattriggers.ctjs.minecraft.libs.Tessellator
+import com.chattriggers.ctjs.minecraft.wrappers.Client
 import com.chattriggers.ctjs.minecraft.wrappers.world.Chunk
 import com.chattriggers.ctjs.minecraft.wrappers.world.block.BlockPos
 import com.chattriggers.ctjs.minecraft.wrappers.utils.Vec3i
 import com.chattriggers.ctjs.minecraft.wrappers.inventory.Item
 import com.chattriggers.ctjs.utils.kotlin.MCEntity
 import com.chattriggers.ctjs.utils.kotlin.MCMathHelper
+import net.minecraft.client.model.ModelBase
+import net.minecraft.client.renderer.entity.RendererLivingEntity
 import net.minecraft.util.Vec3
 import net.minecraft.world.World
 import java.util.*
@@ -150,6 +153,13 @@ open class Entity(val entity: MCEntity) {
      * @return the entity's class name
      */
     fun getClassName(): String = entity.javaClass.simpleName
+
+    /**
+     * Gets the ModelBase of the entity
+     *
+     * @return the entity's main model
+     */
+    fun getMainModel(): ModelBase = (Client.getMinecraft().renderManager.getEntityRenderObject<net.minecraft.entity.Entity>(entity) as RendererLivingEntity).getMainModel()
 
     /**
      * Gets the Java UUID object of this entity.
