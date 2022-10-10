@@ -11,6 +11,7 @@ data class ModuleMetadata(
     val creator: String? = null,
     val description: String? = null,
     val requires: ArrayList<String>? = null,
+    val mapper: Boolean = false,
     val helpMessage: String? = null,
     val changelog: String? = null,
     val ignored: ArrayList<String>? = null,

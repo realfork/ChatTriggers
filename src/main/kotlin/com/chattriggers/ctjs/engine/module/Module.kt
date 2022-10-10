@@ -6,7 +6,7 @@ import com.chattriggers.ctjs.minecraft.libs.renderer.Text
 import com.fasterxml.jackson.core.Version
 import java.io.File
 
-class Module(val name: String, var metadata: ModuleMetadata, val folder: File) {
+class Module(val name: String, var metadata: ModuleMetadata, var folder: File) {
     var targetModVersion: Version? = null
 
     private val gui = object {

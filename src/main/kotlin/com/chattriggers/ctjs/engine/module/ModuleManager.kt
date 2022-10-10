@@ -66,6 +66,9 @@ object ModuleManager {
             }.toList()
         }.flatten()
 
+        // Build mappings
+        cachedModules.filter { it.metadata.mapper }.forEach { checkMappings(it) }
+
         // Setup all loaders
         loaders.forEach {
             it.setup(jars)
