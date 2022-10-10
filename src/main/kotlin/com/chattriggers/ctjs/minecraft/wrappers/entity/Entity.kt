@@ -155,13 +155,6 @@ open class Entity(val entity: MCEntity) {
     fun getClassName(): String = entity.javaClass.simpleName
 
     /**
-     * Gets the ModelBase of the entity
-     *
-     * @return the entity's main model
-     */
-    fun getMainModel(): ModelBase = (Client.getMinecraft().renderManager.getEntityRenderObject<net.minecraft.entity.Entity>(entity) as RendererLivingEntity).getMainModel()
-
-    /**
      * Gets the Java UUID object of this entity.
      * Use of [UUID.toString] in conjunction is recommended.
      *
