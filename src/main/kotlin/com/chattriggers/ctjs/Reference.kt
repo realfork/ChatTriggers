@@ -24,6 +24,7 @@ object Reference {
     const val MODVERSION = "2.1.5"
 
     var isLoaded = true
+    var mapper = false
 
     @Deprecated("Does not provide any additional functionality", ReplaceWith("loadCT"))
     @JvmStatic

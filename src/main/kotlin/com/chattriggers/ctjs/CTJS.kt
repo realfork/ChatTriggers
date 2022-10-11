@@ -1,6 +1,7 @@
 package com.chattriggers.ctjs
 
 import com.chattriggers.ctjs.commands.CTCommand
+import com.chattriggers.ctjs.engine.module.Mapper
 import com.chattriggers.ctjs.engine.module.ModuleManager
 import com.chattriggers.ctjs.engine.module.ModuleUpdater
 import com.chattriggers.ctjs.loader.UriScheme
@@ -57,7 +58,8 @@ object CTJS {
             ModuleUpdater
         ).forEach(MinecraftForge.EVENT_BUS::register)
 
-        Mapper.loadMappings()
+        // Enable or disable mappings if there is an issue loading them
+        Reference.mapper = Mapper.loadMappings()
 
         UriScheme.installUriScheme()
         UriScheme.createSocketListener()
