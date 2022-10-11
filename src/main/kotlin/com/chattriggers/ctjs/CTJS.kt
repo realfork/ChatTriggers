@@ -57,6 +57,8 @@ object CTJS {
             ModuleUpdater
         ).forEach(MinecraftForge.EVENT_BUS::register)
 
+        Mapper.loadMappings()
+
         UriScheme.installUriScheme()
         UriScheme.createSocketListener()
     }
