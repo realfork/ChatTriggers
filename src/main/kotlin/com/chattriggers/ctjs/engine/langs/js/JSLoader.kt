@@ -37,7 +37,7 @@ object JSLoader : ILoader {
     private val triggers = ConcurrentHashMap<TriggerType, ConcurrentSkipListSet<Trigger>>()
     override val console by lazy { Console(this) }
 
-    private lateinit var moduleContext: Context
+    internal lateinit var moduleContext: Context
     private lateinit var evalContext: Context
     private lateinit var scope: Scriptable
     private lateinit var require: CTRequire

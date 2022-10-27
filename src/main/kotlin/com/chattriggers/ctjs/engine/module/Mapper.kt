@@ -1,15 +1,27 @@
 package com.chattriggers.ctjs.engine.module
 
 import com.chattriggers.ctjs.engine.langs.js.JSLoader
+import org.mozilla.classfile.ClassFileWriter
+import org.mozilla.javascript.CompilerEnvirons
 import org.mozilla.javascript.EcmaError
+import org.mozilla.javascript.ErrorReporter
 import org.mozilla.javascript.Parser
+import org.mozilla.javascript.Scriptable
 import org.mozilla.javascript.ast.AstNode
+import org.mozilla.javascript.ast.AstRoot
 import org.mozilla.javascript.ast.NodeVisitor
 import org.mozilla.javascript.ast.PropertyGet
+import org.mozilla.javascript.commonjs.module.ModuleScript
+import org.mozilla.javascript.optimizer.ClassCompiler
+import scala.reflect.runtime.ReflectionUtils
 import java.io.File
+import java.io.FileOutputStream
 import java.io.FileReader
 import java.nio.charset.Charset
 import java.util.*
+import kotlin.jvm.internal.Reflection
+import kotlin.reflect.full.declaredFunctions
+
 
 object Mapper {
     private val methodMappings = mutableMapOf<String, String>()
@@ -51,16 +63,24 @@ object Mapper {
             it.mkdirs()
         }
 
+        // Reflect into ESM parsing method
+        val compilerEnvirons = CompilerEnvirons().apply { initFromContext(JSLoader.moduleContext) }
+        val parseMethod = JSLoader.moduleContext::class.java.getDeclaredMethod("parse", String.javaClass, String.javaClass, java.lang.Integer::class.java, compilerEnvirons.javaClass, ErrorReporter::class.java, java.lang.Boolean::class.java).also {
+            it.isAccessible = true
+        }
+
         // Run remapper
         module.folder.walk().filter {
             it.isFile && it.extension == "js"
         }.forEach {
             try {
-                val source = Parser().parse(FileReader(it), null, 1).also { it.visit(Remapper()) }.toSource()
+                val source = parseMethod.invoke(JSLoader.moduleContext, FileReader(it).readText(), it.path, 1, compilerEnvirons, compilerEnvirons.errorReporter, false) as AstRoot
+                //val source = Parser().parse(FileReader(it), null, 1)
+                source.visit(Remapper())
 
                 val path = buildFolder.path + it.path.split(module.name).drop(1).joinToString()
-                File(path).writeText(source, Charset.defaultCharset())
-            } catch (e: Exception) { e.printStackTrace() }
+                File(path).writeText(source.toSource(), Charset.defaultCharset())
+            } catch (e: Exception) {}
         }
 
         module.folder = buildFolder
