@@ -19,7 +19,10 @@ abstract class Gui : GuiScreen() {
     private var onMouseDragged: RegularTrigger? = null
     private var onActionPerformed: RegularTrigger? = null
     private var onOpened: RegularTrigger? = null
+<<<<<<< Updated upstream
     private var onClosed: RegularTrigger? = null
+=======
+>>>>>>> Stashed changes
 
     private var mouseX = 0
     private var mouseY = 0
@@ -162,7 +165,11 @@ abstract class Gui : GuiScreen() {
     /**
      * Registers a method to be run when the gui is opened.
      * Arguments passed through to method:
+<<<<<<< Updated upstream
      * - the gui that is opened
+=======
+     * - the gui
+>>>>>>> Stashed changes
      *
      * @param method the method to run
      * @return the trigger
@@ -173,6 +180,7 @@ abstract class Gui : GuiScreen() {
     }
 
     /**
+<<<<<<< Updated upstream
      * Registers a method to be run when the gui is closed.
      * Arguments passed through to method:
      * - the gui that is closed
@@ -194,6 +202,8 @@ abstract class Gui : GuiScreen() {
     }
 
     /**
+=======
+>>>>>>> Stashed changes
      * Internal method to run trigger. Not meant for public use
      */
     override fun mouseClicked(mouseX: Int, mouseY: Int, button: Int) {
